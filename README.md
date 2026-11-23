@@ -22,6 +22,23 @@ runapplication.bat    :: opens backend + frontend in separate windows
 
 - API: http://localhost:8000 · Swagger UI: http://localhost:8000/docs · OpenAPI: http://localhost:8000/openapi.json
 
+## Frontend (React + Vite + Axios)
+
+Runs at http://localhost:3000 and talks to the API only through Axios ([frontend/src/api/client.js](frontend/src/api/client.js)). Set `VITE_API_URL` to point it at a different backend.
+
+```bat
+cd frontend
+npm start        :: dev server on :3000
+npm run build    :: production build into frontend/dist
+```
+
+Features:
+- **Sessions tab:** schedule a session (title, goal, minutes, with 25/50/90 presets). Each card shows only the actions valid for its status: Start / Pause (asks for a reason) / Resume / Complete. Completing a paused session asks for confirmation because it marks the session abandoned.
+- **Live countdown** for active and paused sessions. It shows when you're over time, how long is left before the 10% grace runs out, and warns when the next pause would interrupt the session.
+- **History tab** (`#history`): completion ratio, focus time, average duration, pauses, an outcomes chart, a planned-vs-actual chart, and a table of past sessions with interruption reasons.
+- **Real-time updates:** both views poll the API (every 5 s / 10 s, paused while the tab is hidden), so statuses the server changes on its own, like abandoned, appear without a reload.
+- API errors (404/409/422, backend unreachable) are shown inline next to the action that caused them.
+
 ## Running tests
 
 ```bat
@@ -83,4 +100,8 @@ alembic/             migrations
 tests/               pytest suite (API, rules, DB, migrations, seed)
 seed_data.sql, seed.py
 main.py              `python main.py` -> uvicorn on :8000
+frontend/src/
+  api/client.js      Axios instance + all API calls + error formatting
+  hooks/             usePolling (live refresh), useNow (1 s ticker)
+  components/        SessionForm, SessionCard, Countdown, SessionsView, HistoryView, StatusBadge
 ```
