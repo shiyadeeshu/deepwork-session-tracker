@@ -1,0 +1,20 @@
+# Python
+env/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Database
+*.db
+*.db-journal
+
+# Frontend
+frontend/node_modules/
+frontend/build/
+frontend/dist/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
