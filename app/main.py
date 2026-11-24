@@ -17,6 +17,8 @@ def create_app() -> FastAPI:
         title="Deep Work Session Tracker API",
         version="1.0.0",
         description="Plan, start, pause, resume and complete focused work sessions.",
+        # Declared so the generated SDK's default host is the local API (ApiClient() just works).
+        servers=[{"url": config.API_PUBLIC_URL, "description": "Local development server"}],
     )
 
     app.add_middleware(

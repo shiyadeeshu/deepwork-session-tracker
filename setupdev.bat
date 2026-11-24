@@ -11,6 +11,13 @@ python -m pip install --upgrade pip >nul
 pip install -r requirements.txt || goto :error
 alembic upgrade head || goto :error
 
+echo Installing generated Python SDK...
+if exist deepwork_sdk\pyproject.toml (
+    pip install ./deepwork_sdk || goto :error
+) else (
+    echo [WARN] deepwork_sdk not found - run generate_sdk.bat to create it.
+)
+
 echo Setting up frontend...
 if exist frontend\package.json (
     where npm >nul 2>nul || (echo [ERROR] npm not found. Install Node.js LTS from https://nodejs.org & goto :error)

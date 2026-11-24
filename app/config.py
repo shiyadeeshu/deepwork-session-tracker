@@ -3,6 +3,9 @@ import os
 
 DATABASE_URL: str = os.getenv("DEEPWORK_DATABASE_URL", "sqlite:///./deepwork.db")
 
+# Base URL advertised in the OpenAPI spec (becomes the generated SDK's default host).
+API_PUBLIC_URL: str = os.getenv("DEEPWORK_API_URL", "http://localhost:8000")
+
 # Origins allowed to call the API from a browser (React dev servers).
 CORS_ORIGINS: list[str] = os.getenv(
     "DEEPWORK_CORS_ORIGINS", "http://localhost:3000,http://localhost:5173"
